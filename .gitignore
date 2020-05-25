@@ -1,0 +1,10 @@
+# idea
+.idea/
+/idea/
+*.iml
+
+# temp file
+*.log
+
+# output
+out/
