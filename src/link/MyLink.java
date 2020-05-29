@@ -138,4 +138,78 @@ public class MyLink {
             System.out.println(p.item);
         }
     }
+
+    // 循环实现单链表反转
+    public Node getRevertHead(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node currNode = head;
+        Node prevNode = null;
+        while (currNode != null) {
+            Node tmpNode = currNode.next;
+            currNode.next = prevNode;
+            prevNode = currNode;
+            currNode = tmpNode;
+        }
+        return prevNode;
+    }
+
+    // 递归实现单链表反转
+    public Node getRevertHeadRecur(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node lastNode = getRevertHeadRecur(head.next);
+        head.next.next = head;
+        head.next = null;
+        return lastNode;
+    }
+
+    // 合并两个有序单链表
+    public Node  mergeSortedList(Node head1, Node head2) {
+        Node newHead = null;
+        Node currNode = null;
+
+        while (head1 != null && head2 != null) {
+            if (head1.item <= head2.item) {
+                if (newHead == null) {
+                    newHead = head1;
+                    currNode = newHead;
+                } else {
+                    currNode.next = head1; // 这里有问题，newHead也要往后移
+                    currNode = currNode.next;
+                }
+                head1 = head1.next;
+            } else {
+                if (newHead == null) {
+                    newHead = head2;
+                    currNode = newHead;
+                } else {
+                    currNode.next = head2;
+                    currNode = currNode.next;
+                }
+                head2 = head2.next;
+            }
+        }
+
+        if (head1 != null) {
+            if (newHead == null) {
+                newHead = head1;
+            } else {
+                currNode.next = head1;
+            }
+
+        }
+
+        if (head2 != null) {
+            if (newHead == null) {
+                newHead = head2;
+            } else {
+                currNode.next = head2;
+            }
+        }
+
+        return newHead;
+    }
 }

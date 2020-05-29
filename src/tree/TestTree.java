@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.Random;
+
 public class TestTree {
 
     public static void main(String[] argv) {
@@ -13,7 +15,19 @@ public class TestTree {
 //        bt.postOrder(root);
 //        bt.preOrderIter(root);
 //        bt.inOrderIter(root);
-        bt.postOrderIter(root);
+//        bt.postOrderIter(root);
+//        double result = Math.random();
+
+        Random random = new Random(12);
+        int ran1 = random.nextInt(10);
+        System.out.println(ran1);
+
+        Random random2 = new Random();
+        int ran2 = random2.nextInt(10);
+        System.out.println(ran2);
+
+        double rand3 = random.nextDouble();
+        System.out.println(rand3);
 
     }
 }
