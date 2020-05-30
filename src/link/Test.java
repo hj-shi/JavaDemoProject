@@ -24,8 +24,9 @@ public class Test {
 //        Node recHead = list.reverseIteratively(list.head);
 //        Node revreseHead = list.getRevertHead(list.head);
 //        Node revreseHeadRecur = list.getRevertHeadRecur(list.head);
-
-        Node newHead = list.mergeSortedList(list.head, list2.head);
+//
+//        Node newHead = list.mergeSortedList(list.head, list2.head);
+        Node newHead = list.mergeSortedListRecursively(list.head, list2.head);
 
         Node tmp = newHead;
         while (tmp != null) {

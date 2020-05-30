@@ -212,4 +212,23 @@ public class MyLink {
 
         return newHead;
     }
+
+    // 递归合并两个有序链表
+    public Node mergeSortedListRecursively(Node head1, Node head2) {
+        if (head1 != null && head2 != null) {
+            if (head1.item <= head2.item) {
+                head1.next = mergeSortedListRecursively(head1.next, head2);
+                return head1;
+            } else {
+                head2.next = mergeSortedListRecursively(head1, head2.next);
+                return head2;
+            }
+        } else if (head1 == null && head2 != null) {
+            return head2;
+        } else if (head1 != null && head2 == null) {
+            return head1;
+        } else {
+            return null;
+        }
+    }
 }
