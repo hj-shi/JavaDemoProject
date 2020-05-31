@@ -1,14 +1,12 @@
 package tree;
 
-import java.util.Random;
 
 public class TestTree {
 
     public static void main(String[] argv) {
-        int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         BinaryTree bt = new BinaryTree();
 
-        Node root = bt.createBinaryTree(arr);
+//        Node root = bt.createBinaryTree1();
 //        bt.preOrder(root);
 
 //        bt.inOrder(root);
@@ -17,17 +15,17 @@ public class TestTree {
 //        bt.inOrderIter(root);
 //        bt.postOrderIter(root);
 //        double result = Math.random();
+        BinaryTreeNode root1 = bt.createBinaryTree1();
+        BinaryTreeNode root2 = bt.createBinaryTree2();
+        BinaryTreeNode root3 = bt.createBinaryTree3();
 
-        Random random = new Random(12);
-        int ran1 = random.nextInt(10);
-        System.out.println(ran1);
+//        boolean result = bt.hasSubtree(root1, root2);
+//        System.out.println("二叉树root1包含root2 ？ " + result);
+//        BinaryTreeNode newRoot = bt.mirrorRecursively(root3);
+//        BinaryTreeNode newRoot = bt.mirroIterally(root3);
+//        bt.preOrder(newRoot);
 
-        Random random2 = new Random();
-        int ran2 = random2.nextInt(10);
-        System.out.println(ran2);
-
-        double rand3 = random.nextDouble();
-        System.out.println(rand3);
-
+        bt.printBinaryTreeByLevel(root3);
+        bt.printBinaryTreeByLevelUseQueue(root3);
     }
 }
