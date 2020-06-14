@@ -1,10 +1,12 @@
 package tree;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
 public class BinaryTree {
+    BinaryTreeNode linkTail = null;
 
     public BinaryTreeNode createBinaryTree1() {
 
@@ -57,6 +59,57 @@ public class BinaryTree {
 
         root.setLeft(root1);
         root.setRight(root2);
+
+        return root;
+    }
+
+    public BinaryTreeNode createBinaryTree4() {
+        BinaryTreeNode root = new BinaryTreeNode(10);
+
+        BinaryTreeNode root1 = new BinaryTreeNode(5);
+        root1.setLeft(new BinaryTreeNode(4));
+        root1.setRight(new BinaryTreeNode(7));
+
+        root.setLeft(root1);
+        root.setRight(new BinaryTreeNode(12));
+
+        return root;
+    }
+
+    public BinaryTreeNode createBinaryTree5() {
+        BinaryTreeNode root = new BinaryTreeNode(10);
+
+        BinaryTreeNode root1 = new BinaryTreeNode(6);
+        root1.setLeft(new BinaryTreeNode(4));
+        root1.setRight(new BinaryTreeNode(8));
+
+        BinaryTreeNode root2 = new BinaryTreeNode(14);
+        root2.setLeft(new BinaryTreeNode(12));
+        root2.setRight(new BinaryTreeNode(16));
+
+        root.setLeft(root1);
+        root.setRight(root2);
+
+        return root;
+    }
+
+
+    public BinaryTreeNode createBinaryTree6() {
+        BinaryTreeNode root = new BinaryTreeNode(1);
+
+        BinaryTreeNode root1 = new BinaryTreeNode(2);
+        root1.setLeft(new BinaryTreeNode(4));
+        BinaryTreeNode root2 = new BinaryTreeNode(5);
+        root2.setRight(new BinaryTreeNode(6));
+        root1.setRight(root2);
+
+        BinaryTreeNode root3 = new BinaryTreeNode(3);
+//        BinaryTreeNode root4 = new BinaryTreeNode(7);
+//        root4.setRight(new BinaryTreeNode(8));
+        root3.setRight(new BinaryTreeNode(7));
+
+        root.setLeft(root1);
+        root.setRight(root3);
 
         return root;
     }
@@ -284,5 +337,147 @@ public class BinaryTree {
             }
         }
     }
+
+    // 打印二叉树中最大路径和等于特定值的路径
+    public void printPathEqualToNumber(BinaryTreeNode root, int expectedSum) {
+        if (root == null) {
+            return;
+        }
+
+
+        // 进行栈的初始化，初始化currentSum值
+        Stack<BinaryTreeNode> pathStack = new Stack<>();
+        int currentSum = 0;
+
+        // 将栈和当前值传入，然后进行递归
+        findPath(root, expectedSum, pathStack, currentSum);
+
+    }
+
+    public void findPath(BinaryTreeNode root, int expectedSum, Stack<BinaryTreeNode> path, int currentSum) {
+
+        currentSum += root.data;
+        path.push(root);
+
+        if (root.left == null && root.right == null) {
+            // 到达叶节点
+            if (currentSum == expectedSum) {
+                // 输出路径
+                Iterator<BinaryTreeNode> stackIterator = path.iterator();
+                while (stackIterator.hasNext()) {
+                    System.out.print(stackIterator.next().data + " ");
+                }
+                System.out.println();
+            }
+        } else if (root.left != null && root.right == null) {
+            findPath(root.left, expectedSum,  path, currentSum);
+        } else if (root.right != null && root.left == null) {
+            findPath(root.right, expectedSum,  path, currentSum);
+        } else {
+            findPath(root.left, expectedSum,  path, currentSum);
+            findPath(root.right, expectedSum,  path, currentSum);
+        }
+
+        path.pop();
+    }
+
+    // 二叉搜索树转换为双向链表
+    public BinaryTreeNode turnBinaryTreeToLink(BinaryTreeNode root) {
+
+//        BinaryTreeNode lastNodeInLink = null;
+//        getLink(root， lastNodeInLink); // Java里面不能这么写。。。。。。。。
+
+        getLink(root);
+
+        // 返回头节点
+        BinaryTreeNode pHeadOfList = linkTail;
+        while (pHeadOfList != null && pHeadOfList.left != null) {
+            pHeadOfList = pHeadOfList.left;
+        }
+        return pHeadOfList;
+
+
+//        BinaryTreeNode leftConnectNode = null;
+//        BinaryTreeNode rightConnectNode = null;
+//        if (root.left == null && root.right == null) {
+//            return root;
+//        } else if (root.left != null && root.right == null) {
+//            leftConnectNode = turnBinaryTreeToLink(root.left);
+//            leftConnectNode.right = root;
+//            root.left = leftConnectNode;
+//            return root;
+//        } else if (root.right != null && root.left == null) {
+//            rightConnectNode = turnBinaryTreeToLink(root.right);
+//            rightConnectNode.left = root;
+//            root.right = rightConnectNode;
+//            return root;
+//        } else {
+//            leftConnectNode = turnBinaryTreeToLink(root.left);
+//            rightConnectNode = turnBinaryTreeToLink(root.right);
+//            leftConnectNode.right = root;
+//            rightConnectNode.left = root;
+//            root.left = leftConnectNode;
+//            root.right = rightConnectNode;
+//        }
+
+    }
+
+    public void getLink(BinaryTreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        getLink(root.left);
+        createList(root);
+        getLink(root.right);
+
+    }
+
+    public void createList(BinaryTreeNode currNode) {
+        currNode.left = linkTail;
+        if (linkTail != null) {
+            linkTail.right = currNode;
+        }
+
+        linkTail = currNode;
+    }
+
+    // 判断二叉树是否平衡
+    public boolean isBalance(BinaryTreeNode root) {
+        if (root == null) {
+            return true;
+        }
+
+        return getMaxDepthOfTree(root) != -1;
+    }
+
+    private int getMaxDepthOfTree(BinaryTreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftDepth = getMaxDepthOfTree(root.left);
+        if (leftDepth == -1) {
+            return -1;
+        }
+        int rightDepth = getMaxDepthOfTree(root.right);
+        if (rightDepth == -1) {
+            return -1;
+        }
+
+        return Math.abs(leftDepth - rightDepth) > 1 ? -1 : Math.max(leftDepth, rightDepth) + 1;
+    }
+
+    private int getMinDepthOfTree(BinaryTreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftDepth = getMinDepthOfTree(root.left);
+        int rightDepth = getMinDepthOfTree(root.right);
+
+        return leftDepth <= rightDepth ? leftDepth + 1 : rightDepth + 1;
+    }
+
 
 }

@@ -50,4 +50,24 @@ public class MatrixMethods {
             }
         }
     }
+
+    // 连续子数组的最大和
+    public int maxSumOfChildArray(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        int sum = 0;
+        int maxSum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (sum <= 0) {
+                sum = arr[i];
+            } else {
+                sum += arr[i];
+            }
+            if (sum > maxSum) {
+                maxSum = sum;
+            }
+        }
+        return maxSum;
+    }
 }

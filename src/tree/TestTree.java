@@ -18,6 +18,9 @@ public class TestTree {
         BinaryTreeNode root1 = bt.createBinaryTree1();
         BinaryTreeNode root2 = bt.createBinaryTree2();
         BinaryTreeNode root3 = bt.createBinaryTree3();
+        BinaryTreeNode root4 = bt.createBinaryTree4();
+        BinaryTreeNode root5 = bt.createBinaryTree5();
+        BinaryTreeNode root6 = bt.createBinaryTree6();
 
 //        boolean result = bt.hasSubtree(root1, root2);
 //        System.out.println("二叉树root1包含root2 ？ " + result);
@@ -25,7 +28,17 @@ public class TestTree {
 //        BinaryTreeNode newRoot = bt.mirroIterally(root3);
 //        bt.preOrder(newRoot);
 
-        bt.printBinaryTreeByLevel(root3);
-        bt.printBinaryTreeByLevelUseQueue(root3);
+//        bt.printBinaryTreeByLevel(root3);
+//        bt.printBinaryTreeByLevelUseQueue(root3);
+//        bt.printPathEqualToNumber(root4, 19);
+//        BinaryTreeNode newHead = bt.turnBinaryTreeToLink(root5);
+//        while (newHead != null && newHead.right != null) {
+//            System.out.print(newHead.data + " ");
+//            newHead = newHead.right;
+//        }
+
+        boolean result = bt.isBalance(root6);
+        System.out.println("isBalance: " + result);
+
     }
 }
