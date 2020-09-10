@@ -65,22 +65,16 @@ public class Test {
 //        }
 //        System.out.println("============================");
 
-//        Set<String> set = new LinkedHashSet<>();
-//        set.add(new Apple(1));
-//        set.add(new Apple(2));
-//        set.add(new Apple(3));
-//        Apple apple4 = new Apple(4);
-//        set.add(apple4);
-//        set.remove(apple4);
-//        set.add("shi");
-//        set.add("hong");
-//        set.add("jie");
-//        System.out.println(set.contains("shi"));
-//
-//        Iterator<String> iter = set.iterator();
-//        while (iter.hasNext()) {
-//            System.out.println(iter.next());
-//        }
+        Set<String> set = new LinkedHashSet<>();
+        set.add("shi");
+        set.add("hong");
+        set.add("jie");
+        System.out.println(set.contains("shi"));
+
+        Iterator<String> iter = set.iterator();
+        while (iter.hasNext()) {
+            System.out.println(iter.next());
+        }
 
 //        Map<Person, Integer> vote = new HashMap<>();
 //        vote.put(new Person("shi", 18), 1);
@@ -90,20 +84,20 @@ public class Test {
 //            System.out.println(entry.getKey() + " " + entry.getValue());
 //        }
 
-        Person person1 = new Person("shi", 20);
-        Person person2 = new Person("shi", 20);
-        boolean bo = person1.equals(person2);
-        System.out.println("equals: " + bo);
-        System.out.println(person1.hashCode());
-        System.out.println(person2.hashCode());
-
-        Map<Person, Integer> vote = new HashMap<>();
-        vote.put(new Person("shi", 18), 1);
-        vote.put(new Person("shi", 18), 2);
-
-        for (Map.Entry<Person, Integer> entry : vote.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
+//        Person person1 = new Person("shi", 20);
+//        Person person2 = new Person("shi", 20);
+//        boolean bo = person1.equals(person2);
+//        System.out.println("equals: " + bo);
+//        System.out.println(person1.hashCode());
+//        System.out.println(person2.hashCode());
+//
+//        Map<Person, Integer> vote = new HashMap<>();
+//        vote.put(new Person("shi", 18), 1);
+//        vote.put(new Person("shi", 18), 2);
+//
+//        for (Map.Entry<Person, Integer> entry : vote.entrySet()) {
+//            System.out.println(entry.getKey() + " " + entry.getValue());
+//        }
 
 
     }

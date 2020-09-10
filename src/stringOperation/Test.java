@@ -1,5 +1,8 @@
 package stringOperation;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class Test {
     public static void main(String[] args) {
         Resolution resolution = new Resolution();
@@ -44,7 +47,20 @@ public class Test {
 //        System.out.println(resolution.str2int("+235")); // 正数，OK
 //        System.out.println(resolution.str2int("012")); // 以0开头的数, ok
 //        System.out.println(resolution.str2int("000")); // 全是0，ok
-        System.out.println(resolution.str2int("-000")); // -0，OK
-
+//        System.out.println(resolution.str2int("-000")); // -0，OK
+        String s1 = "323";
+        String s2 = "332";
+        String[] array = new String [] {"323", "332", "31", "312"};
+        Arrays.sort(array, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                String s1 = o1 + o2;
+                String s2 = o2 + o1;
+                return s1.compareTo(s2);
+            }
+        });
+        for (String str: array) {
+            System.out.print(str + " ");
+        }
     }
 }

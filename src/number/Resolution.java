@@ -2,6 +2,7 @@ package number;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Resolution {
     public int numberOf1Between1AndN(int number) {
@@ -219,6 +220,127 @@ public class Resolution {
     private boolean match(int num, int index) {
         num >>= index;
         return (num & 1) == 1;
+    }
+
+
+    public int randomInRange(int min, int max) {
+        Random random = new Random();
+        int number = random.nextInt(max - min + 1) + min;
+        return number;
+    }
+
+
+    public int reverse (int x) {
+        // write code here
+        boolean isNegative = x < 0;
+        int absoluteNumber = Math.abs(x);
+        char[] chars = String.valueOf(absoluteNumber).toCharArray();
+        int result = 0;
+        for(int i = chars.length; i > 0; i--) {
+            result = result + (int)(Math.pow(10, i-1) * (chars[i-1] - '0'));
+        }
+        if (isNegative) {
+            result = (-result);
+        }
+
+        return result;
+    }
+
+
+    public double pow(double base, int n) throws Exception {
+        //
+        double result = 1;
+        if (n < 0 && base == 0) {
+            throw new Exception("参数异常，对0做负数次方");
+        }
+
+        // 次方数的绝对值
+        int x = Math.abs(n);
+
+
+        for(int i = 1; i <= x; i++) {
+            result =  result * base;
+        }
+
+        if (n < 0) {
+            return 1 / result;
+        }
+
+        return result;
+
+
+    }
+
+    public double powerPro(double base, int n) throws Exception {
+        double result;
+        if (n < 0 && base == 0) {
+            throw new Exception("参数异常，对0做负数次方");
+        }
+
+        // 次方数的绝对值
+        int x = Math.abs(n);
+
+        result = purelyPower(base, x);
+
+        if (n < 0) {
+            return 1 / result;
+        }
+
+        return result;
+
+    }
+
+    public double purelyPower(double base, int n) {
+        if (n == 0) {
+            return 1;
+        }
+
+        if (n == 1) {
+            return base;
+        }
+
+        if ((n & 0x01) == 1) {
+            // n 为奇数
+            return base * purelyPower(base,n - 1);
+        }
+
+        // n 为 偶数
+        double result;
+        result = purelyPower(base, n >> 1);
+        return result * result;
+    }
+
+    public void printOneToNRecurisively(int[] nums, int  n) {
+        if (n == 1) {
+            // 当n减到1时，这一位数字有10种情况，只打印一种吗？
+            for (int i = 0; i < 10; i++) {
+                nums[nums.length-1] = i;
+                printNumbers(nums); // 写到这
+            }
+//            printNumbers(nums); // 这一步不能写在这，要确定一次打一次，写上面
+            return; // 这一点开始的时候没想到，应该是要退出的，不然就往后执行了！！！
+        }
+
+        // 递推公式是什么，如果递归函数本身不需要返回值的话，那递推公式所要考虑的是 chars ?
+        // 递的过程怎么联系起来，归的过程又怎么联系起来？
+
+        // 当前的过程也需要确定第 n 位，然后再递其余的n-1位，这时候应该不能打，需要等到其他位确认了
+        // 确定第 n 为
+        for (int i = 0; i < 10; i++) {
+            nums[nums.length - n] = i;
+            printOneToNRecurisively(nums, n-1);
+        }
+
+        // 这样能打出来，但是次序不对，应该按从低位到高位的次序
+
+    }
+
+
+    public void printNumbers(int[] number) {
+        for (int i = 0; i < number.length; i++) {
+            System.out.print(number[i]);
+        }
+        System.out.println();
     }
 
 }
