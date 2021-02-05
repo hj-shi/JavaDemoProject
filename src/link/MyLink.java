@@ -1,5 +1,7 @@
 package link;
 
+import java.util.Stack;
+
 public class MyLink {
     Node head = null; // 头节点
     // 向链表中插入数据
@@ -231,4 +233,204 @@ public class MyLink {
             return null;
         }
     }
-}
+
+        // 反转 1 -> 2 -> 3 -> 4  --->   4  -> 3 -> 2 -> 1
+        // 递归方式实现
+        public Node reverse(Node head) {
+            // 退出条件
+            if (head == null || head.next == null )  {
+               return head;
+            }
+            Node newNode = reverse(head.next);
+            // 回溯阶段，比如回到了倒数第二个节点，它知道后一个节点
+            // 回到了倒数第三个节点，第三个节点
+            if (head.next != null) {
+                head.next.next = head;
+                head.next = null;
+            }
+
+            return newNode;
+        }
+
+        // 两个链表的第一个公共节点
+        public Node firstSameNode(Node list1, Node list2) {
+            if (list1 == null || list2 == null) {
+                return null;
+            }
+
+            int length1 = 0;
+            Node tmpNode = list1;
+            while (tmpNode != null) {
+                length1++;
+                tmpNode = tmpNode.next;
+            }
+
+            int length2 = 0;
+            tmpNode = list2;
+            while (tmpNode != null) {
+                length2++;
+                tmpNode = tmpNode.next;
+            }
+
+            Node beginNode = null;
+            int step = 0;
+
+            if (length1 > length2) {
+                // 第一个链表比较长
+                step = length1 - length2;
+                beginNode = list1;
+                tmpNode = list2;
+            } else {
+                // 第二个链表比较长
+                step = length2 - length1;
+                beginNode = list2;
+                tmpNode = list1;
+
+            }
+
+            while (step > 0) {
+                beginNode = beginNode.next;
+                step--;
+            }
+
+            while (tmpNode != null) {
+                if (tmpNode.item == beginNode.item) {
+                    return tmpNode;
+                }
+                tmpNode = tmpNode.next;
+                beginNode = beginNode.next;
+            }
+
+            return null;
+        }
+
+        // 使用辅助栈的方式
+        public Node getFirstNodeByStack(Node list1, Node list2) {
+            Stack<Node> stack1 = new Stack<>();
+            Stack<Node> stack2 = new Stack<>();
+
+            // 将 list1 中的节点放入 stack1 中
+            Node tmp1 = list1;
+            while (tmp1 != null) {
+                stack1.push(tmp1);
+                tmp1 = tmp1.next;
+            }
+
+            // 将 list2 中的节点放入 stack1 中
+            Node tmp2 = list2;
+            while (tmp2 != null) {
+                stack2.push(tmp2);
+                tmp2 = tmp2.next;
+            }
+
+            Node result = null;
+            Node currentNode1 = stack1.pop();
+            Node currentNode2 = stack2.pop();
+            while (currentNode1.item == currentNode2.item) {
+                result = currentNode1;
+                currentNode1 = stack1.pop();
+                currentNode2 = stack2.pop();
+            }
+
+            return result;
+        }
+
+
+        public Node mergeTwoList(Node list1, Node list2) {
+            if (list1 == null) return list2;
+            if (list2 == null) return list1;
+
+            Node currentNode1 = list1;
+            Node currentNode2 = list2;
+
+            Node newList = null;
+
+            if (list1.item <= list2.item) {
+                // 链表1中的值较小
+                newList = list1;
+                currentNode1 = list1.next;
+            } else {
+                newList = list2;
+                currentNode2 = list2.next;
+            }
+
+            Node currentNode = newList;
+
+            while (currentNode1 != null && currentNode2 != null) {
+                if (currentNode1.item <= currentNode2.item) {
+                    // 链表1中的值较小
+                    currentNode.next = currentNode1;
+                    currentNode1 = currentNode1.next;
+                } else {
+                    currentNode.next = currentNode2;
+                    currentNode2 = currentNode2.next;
+                }
+                currentNode = currentNode.next;
+            }
+
+            // list1 有剩余
+            while (currentNode1 != null) {
+                currentNode.next = currentNode1;
+                currentNode1 = currentNode1.next;
+                currentNode = currentNode.next;
+            }
+
+            // list2 有剩余
+            while (currentNode2 != null) {
+                currentNode.next = currentNode2;
+                currentNode2 = currentNode2.next;
+                currentNode = currentNode.next;
+            }
+
+            return newList;
+        }
+
+        public Node reverseListByIter(Node list) {
+            if (list == null || list.next == null) return list;
+
+            Node currentNode = list;
+            Node nextNode = currentNode.next;
+            currentNode.next = null;
+
+            while (nextNode.next != null) {
+                // 暂时保存 nextNode 的下一个节点
+                Node tmpNode = nextNode.next;
+                // 将 nextNode 的下一个节点指向当前节点
+                nextNode.next = currentNode;
+                // 将当前节点的替换为当前节点的下一个
+                currentNode = nextNode;
+                // 将
+                nextNode = tmpNode;
+
+            }
+            // 最后把next指回当前节点
+            nextNode.next = currentNode;
+            return nextNode;
+        }
+
+        // 获取倒数第k个节点，为了符合人们的习惯k=1 表示获取尾节点）
+        public Node getLastNodeK(Node list, int k) {
+            if (list == null || k <= 0) return null;
+            int index = k;
+
+            Node pointer1 = list;
+            Node pointer2 = list;
+            // 将 pointer1 先往前走k步
+            while ( index > 0) {
+                // 链表本身长度小于k
+                if (pointer1 == null) {
+                    return null;
+                }
+                pointer1 = pointer1.next;
+                index--;
+            }
+
+            while (pointer1 != null) {
+                pointer1 = pointer1.next;
+                pointer2 = pointer2.next;
+            }
+
+            return pointer2;
+        }
+
+    }

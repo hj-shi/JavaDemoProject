@@ -2,6 +2,7 @@ package number;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Resolution {
@@ -341,6 +342,36 @@ public class Resolution {
             System.out.print(number[i]);
         }
         System.out.println();
+    }
+
+    public boolean isHuiNum(int number) {
+        if (number < 0) {
+            return false;
+        }
+
+        boolean isHui = true;
+        List<Integer> list = new ArrayList<>();
+        int currentNumber = number;
+        // 分解
+        while(currentNumber > 0) {
+            int num = currentNumber % 10;
+            currentNumber = currentNumber / 10;
+            list.add(num);
+        }
+        // 判断两端是否相等
+        int leftIndex = 0;
+        int rightIndex = list.size() - 1;
+
+        while(leftIndex < rightIndex) {
+            if (list.get(leftIndex) != list.get(rightIndex)) {
+                isHui = false;
+                break;
+            }
+            leftIndex++;
+            rightIndex--;
+        }
+
+        return isHui;
     }
 
 }

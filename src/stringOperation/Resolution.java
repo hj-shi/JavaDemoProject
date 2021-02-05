@@ -259,4 +259,42 @@ public class Resolution {
         return false;
     }
 
+    public void pintAllCompositionOfCharInString(String str) {
+        if (str == null || str.length() == 0) {
+            return;
+        }
+        char[] chars = str.toCharArray();
+        printCharArray(chars, 0);
+    }
+
+    public void printCharArray(char[] chars, int start) {
+        // 确定第一位，例如abc， 第一位可能为 a, b , c
+        // 第一位就是 a
+        if (start == chars.length - 1) {
+            System.out.println(chars);
+            return;
+        }
+
+        printCharArray(chars, start + 1);
+        for (int i = start + 1; i < chars.length; i++) {
+            // 交换 start 和 i 位置对应的值
+
+            // 下面的判断不能根本解决重复的字符，如 abab
+//            if (chars[start] == chars[i]) {
+//                // 相等跳出本轮循环
+//                continue;
+//            }
+            swap(chars, start, i);
+            printCharArray(chars,start + 1);
+            // 防止对后续递归的影响，还要换回去
+            swap(chars, start, i);
+        }
+    }
+
+    private void swap(char[] chars, int indexA, int indexB) {
+        char tmp = chars[indexA];
+        chars[indexA] = chars[indexB];
+        chars[indexB] = tmp;
+    }
+
 }

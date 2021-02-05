@@ -56,9 +56,11 @@ public class Test {
 //            System.out.println(e.getMessage());
 //        }
 
-        int[] numbers = new int[15];
+//        int[] numbers = new int[15];
+//
+//        resolution.printOneToNRecurisively(numbers, 15);
+        System.out.println(resolution.isHuiNum(12321));
 
-        resolution.printOneToNRecurisively(numbers, 15);
 
     }
 }

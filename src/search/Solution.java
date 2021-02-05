@@ -85,4 +85,159 @@ public class Solution {
 
         return output;
     }
+
+    public int binarySearch(int []array, int target) {
+        if (array == null || array.length == 0) {
+            return -1;
+        }
+
+        int indexStart = 0;
+        int indexEnd = array.length -1;
+        int index = array.length / 2;
+        while (index >= 0 && index < array.length) {
+            if (array[index] == target) {
+                return index;
+            } else if (array[index] > target) {
+                // 从前面半部分查找
+                indexEnd = index - 1;
+                index = (indexStart + indexEnd) / 2;
+            } else if (array[index] < target) {
+                // 从后半部分查找
+                indexStart = index + 1;
+                index  = (indexStart + indexEnd) / 2;
+            }
+        }
+
+        return -1;
+
+    }
+
+    public int getMoreThanHalfNumber(int[] array) {
+        if (array == null || array.length == 0) {
+            return Integer.MIN_VALUE;
+        }
+        int result = array[0];
+        int count = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == result) {
+                count++;
+            } else {
+                if (count == 1) {
+                    result = array[i];
+                } else {
+                    count--;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public int getMiddleOf(int[] array, int left, int right) {
+       int middle = (left + right) / 2;
+       if (array[middle] < array[left] ) {
+           swap(array, left, middle );
+       }
+
+       if (array[right]  < array[left]) {
+           swap(array, left, right);
+       }
+
+       if (array[right]  < array[middle]) {
+           swap(array, right, middle);
+       }
+
+       return middle;
+//        if (right - left < 2) {
+//            return left;
+//        } else {
+//           int middleValue = array[(left + right) / 2];
+//           if (array[left] < array[right]) {
+//               if (middleValue < array[left]) {
+//                   return left;
+//               } else if (middleValue > array[right]) {
+//                   return right;
+//               } else {
+//                   return (left + right) / 2;
+//               }
+//
+//           } else {
+//               if (middleValue < array[right]) {
+//                   return right;
+//               } else if (middleValue > array[left]) {
+//                   return left;
+//               } else {
+//                   return (left + right) / 2;
+//               }
+//           }
+//
+//
+//        }
+
+    }
+
+    public void swap(int[] array, int i, int j) {
+        int tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+
+
+    // 用最后一个元素将数组分为两部分，其中左边都比最后一个元素大，右边都比最后一个元素小
+    public int getBigKOf(int[] array, int left, int right) {
+        int leftIndex = left;
+        int rightIndex = right - 2;
+
+        int targetIndex = getMiddleOf(array, left, right);
+        swap(array, targetIndex, right -1);
+
+        while (leftIndex < rightIndex) {
+            while (leftIndex < right - 1) {
+                // 找到第一个大于目标元素的位置
+                if (array[leftIndex] < array[right-1]) {
+                    leftIndex++;
+                } else {
+                    break;
+                }
+            }
+
+            while (rightIndex > left) {
+                // 找到第一个小于目标元素的位置
+                if (array[rightIndex] > array[right-1]) {
+                    rightIndex--;
+                } else {
+                    break;
+                }
+            }
+
+            // 交换
+            if (leftIndex < rightIndex) {
+               swap(array, leftIndex, rightIndex);
+            }
+        }
+
+        swap(array, leftIndex, right - 1);
+
+       return leftIndex;
+    }
+
+    public int getMinK(int[] array, int k) {
+        int left = 0;
+        int right = array.length - 1;
+        int index = getBigKOf(array, left, right);
+
+        while (index != k) {
+            if (k < index) {
+                right = index - 1;
+            } else {
+                left = index + 1;
+            }
+            index = getBigKOf(array, left, right);
+        }
+
+        return  index;
+
+    }
 }

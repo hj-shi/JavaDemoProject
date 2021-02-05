@@ -70,4 +70,40 @@ public class MatrixMethods {
         }
         return maxSum;
     }
+
+    // 顺时针打印m行n列的数组
+    public void printMatrixClockWisely2(int[][] matrix, int m, int n) {
+        int i = 1;
+        while (2 * i <= m || 2 * i <= n) {
+            // 可以进行下一次循环
+            // 从左到右打印一行
+            for (int j= i; j <= m - i + 1; j++) {
+                System.out.print(matrix[j-1][i-1] + " ");
+            }
+
+            // 从上往下打印（条件是大于两行）
+            if (n - i > 1) {
+                for (int k = i + 1; k <= n - i + 1; k++) {
+                    System.out.print(matrix[m - i][k-1] + " ");
+                }
+            }
+
+            // 从右往左打印一行
+            if (m - i >= 1 && n - i >= 1) {
+                for (int j = m - i; j >= i; j--) {
+                    System.out.print(matrix[j-1][n-i] + " ");
+                }
+            }
+
+            // 从下往上打印一列
+            if (m - i >= 1 && n - i >=2) {
+                for (int k = n - i; k >= i + 1; k--) {
+                    System.out.print(matrix[i-1][k - 1] + " ");
+                }
+            }
+
+            i++;
+
+        }
+    }
 }
